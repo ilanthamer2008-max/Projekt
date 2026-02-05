@@ -12,13 +12,13 @@
 
     <script>
         //Tar ut URL:en så vi kan hämta den
-        const params = new URLSearchParams(window.location.search);
-        const text = document.getElementById("welcome");
-        let username = params.get('username');
-        const HyrScooter = document.getElementById('HyrScooter');
-        const Elscooter = document.getElementById('Elscooter');
-        if(username){
-            text.textContent = 'Välkommen '+username+'!';
+        const params = new URLSearchParams(window.location.search); //Hämtar parametrarna. 
+        const text = document.getElementById("welcome"); //Hämtar välkomstextten
+        let username = params.get('username'); //Hämtar användarnamnet
+        const HyrScooter = document.getElementById('HyrScooter'); //Hämtar knappen
+        const Elscooter = document.getElementById('Elscooter'); //Hämtar Elscooter sektionen
+        if(username){ // Om användarnamnet finns
+            text.textContent = 'Välkommen '+username+'!'; //Sätter välkomsttexten
         };
         </script>
 </body>
