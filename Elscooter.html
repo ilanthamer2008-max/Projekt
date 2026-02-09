@@ -3,6 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel = "stylesheet" href="elscooter.css">
 </head>
 <body>
     <form id="myForm"> 
@@ -29,7 +30,7 @@
             
             console.log(text + password); // Logga användarnamn och lösenord i konsolen (för teständamål, ta bort i produktion)
             
-            if(text == "Ilan08" && password == "madrid24!"){ // Kontrollera om användarnamn och lösenord matchar de förväntade värdena
+            if(text == "Ilan" && password == "madrid24!"){ // Kontrollera om användarnamn och lösenord matchar de förväntade värdena
                 username = text; // Spara användarnamnet i variabeln
                 
                 window.location.href = `ElscootersHemsida.html?username=${encodeURIComponent(username)}`; // Omdirigera till ElscootersHemsida.html och skicka med användarnamnet som en URL-parameter
