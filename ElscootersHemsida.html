@@ -8,19 +8,38 @@
 </head>
 <body>
     <h2 id="welcome"></h2>
-    <button id="HyrScooter">Hyr Elscooter</button>
-
-
+    <button id="HyrScooter">Hyr Elscooter</button> <!-- knapp för att hyra elscooter -->
+    <button id="Hyr1timme" style="display: none;">Hyr 1 timme</button> <!-- knapp för att hyra i 5 minuter -->
+    <button id="Hyr30minuter" style="display: none;"> Hyr 30 minuter</button> <!-- knapp för att hyra i 30 minuter-->
+    <p id="output"></p> <!--här visas totala tiden och kostnaden-->
     <script>
-        //Tar ut URL:en så vi kan hämta den
-        const params = new URLSearchParams(window.location.search); //Hämtar parametrarna. 
-        const text = document.getElementById("welcome"); //Hämtar välkomstextten
-        let username = params.get('username'); //Hämtar användarnamnet
-        const HyrScooter = document.getElementById('HyrScooter'); //Hämtar knappen
-        const Elscooter = document.getElementById('Elscooter'); //Hämtar Elscooter sektionen
-        if(username){ // Om användarnamnet finns
-            text.textContent = 'Välkommen '+username+'!'; //Sätter välkomsttexten
-        };
+        let utText = 0; // total tid i minuter/timmar
+        let utKr = 0; // total kostnad i kronor
+
+        const urlParams = new URLSearchParams(window.location.search); // Hämtar URL-parametrar
+        const username = urlParams.get('username'); // Hämtar användarnamnet från URL-parametrarna
+        document.getElementById('welcome').innerText = `Welcome, ${username}!`; // Visar välkomstmeddelande med användarnamnet
+
+
+        const HyraScooter = document.getElementById('HyrScooter'); // knapp för att hyra elscooter
+        const Hyr1timme = document.getElementById('Hyr1timme'); // knapp för att hyra i 5 minuter
+        const Hyr30minuter = document.getElementById('Hyr30minuter'); // knapp för att hyra i 30 minuter
+        const text = document.getElementById('output'); // element för att visa total tid och kostnad
+         if (!username) {
+            window.location.href = 'Elscooter.html'; // Om inget användarnamn finns skickas man till inloggningssidan
+        }
+        else {
+            document.getElementById('HyrScooter').addEventListener('click', function () {
+
+                HyraScooter.style.display = 'none';
+                Hyr1timme.style.display = 'block'; // visa knappen för att hyra i 5 minuter
+                Hyr30minuter.style.display = 'block'; // visa knappen för att hyra i 30 minuter
+
+            });
+
+            document.getElementById('welcome').textContent = `Welcome, ${username}!` ; // Visar välkommen med användarnamnet
+        }
+        
         </script>
 </body>
 </html>
