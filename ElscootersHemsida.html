@@ -8,13 +8,25 @@
 </head>
 <body>
     <h2 id="welcome"></h2>
+    <div id="status"> Status= Ingen aktiv hyra</div>
+    <h3>Hyres Historik</h3>
+    <div id="Historik"></div>
+
+
+
+
     <button id="HyrScooter">Hyr Elscooter</button> <!-- knapp för att hyra elscooter -->
     <button id="Hyr1timme" style="display: none;">Hyr 1 timme</button> <!-- knapp för att hyra i 5 minuter -->
     <button id="Hyr30minuter" style="display: none;"> Hyr 30 minuter</button> <!-- knapp för att hyra i 30 minuter-->
+    <button id="Avsluta" style="display: none;"> Avsluta</button> <!-- knapp för att avsluta-->
+
     <p id="output"></p> <!--här visas totala tiden och kostnaden-->
     <script>
         let utText = 0; // total tid i minuter/timmar
         let utKr = 0; // total kostnad i kronor
+        let AktivHyra=false;
+        let StartTid=null;
+        
 
         const urlParams = new URLSearchParams(window.location.search); // Hämtar URL-parametrar
         const username = urlParams.get('username'); // Hämtar användarnamnet från URL-parametrarna
@@ -31,15 +43,85 @@
         else {
             document.getElementById('HyrScooter').addEventListener('click', function () {
 
-                HyraScooter.style.display = 'none';
+                if(AktivHyra){
+                    alert("Du har redan hyrt en el-scooter")
+                    return;
+                }
+                
+                AktivHyra=true;
+                StartTid=new Date().toLocaleString();
+
+            
+                document.body.classList.add("Hyr-aktiv");
+                document.getElementById("status").innerText = "Status: Scootern är hyrd"
+                HyraScooter.style.display = 'none'; // gömmer knappen för att avsluta
+                Avsluta.style.display = 'block'; // visa knappen för att avsluta
                 Hyr1timme.style.display = 'block'; // visa knappen för att hyra i 5 minuter
                 Hyr30minuter.style.display = 'block'; // visa knappen för att hyra i 30 minuter
 
             });
 
             document.getElementById('welcome').textContent = `Welcome, ${username}!` ; // Visar välkommen med användarnamnet
+
+
         }
         
+        document.getElementById('Hyr1timme').addEventListener('click', function () { // En händelselyssnare till knapp Hyr1timme
+            utKr+=60; // Skriver ut 60 kr/klick
+            utText+=60; // Skriver ut 60 min/klick
+
+            text.textContent = utText+" minuter= " + utKr+ " kr "; // Visar den totala kostnaden och tiden
+            if(utText>=600){ // om totala tiden är 600+
+                alert("Status: Du har nått maximala hyrningstiden") 
+                Hyr1timme.disabled = true; // knappen slutar funka
+                Hyr30minuter.disbaled = true; // knappen slutar funka
+                Hyr1timme.style.display= 'none'; // gömmer knappen för hyrning i en timme
+                Hyr30minuter.style.display= 'none'; // gömmer knappen för hyrning i en timme
+            }
+            else{
+                Hyr1timme.disabled = false; // får knappen att fortsätta funka
+                Hyr30minuter.disabled = false; // får knappen att fortsätta funka
+                
+            }
+        });
+         
+        document.getElementById('Hyr30minuter').addEventListener('click', function () { // En händelselyssnare till knapp Hyr30minuter
+            utKr+=30; // Skriver ut 30 kr/klick
+            utText+=30; // Skriver ut 30 min/klick
+
+            text.textContent = utText+" minuter= " + utKr+ " kr "; // Visar den totala kostnaden och tiden
+            if(utText>=600){ // om totala tiden är 600+
+                alert("Status: Du har nått maximala hyrningstiden") 
+                Hyr1timme.disabled = true; // knappen slutar funka
+                Hyr30minuter.disbaled = true; // knappen slutar funka
+                Hyr1timme.style.display= 'none'; // gömmer knappen för hyrning i en timme
+                Hyr30minuter.style.display= 'none'; // gömmer knappen för hyrning i 30 minuter
+            }
+            else{
+                Hyr1timme.disabled = false; // får knappen att fortsätta funka
+                Hyr30minuter.disabled = false; // får knappen att fortsätta funka
+                
+            }
+        });
+
+        document.getElementById('Avsluta').addEventListener('click', function () { // En händelselyssnare till knapp Avsluta
+
+            if(utText>0){ // om totala tiden är större än 0
+                alert(" Vill du avsluta? ") 
+                Hyr1timme.disabled = true; // knappen slutar funka
+                Hyr30minuter.disbaled = true; // knappen slutar funka
+                Hyr1timme.style.display= 'none'; // gömmer knappen för hyrning i en timme
+                Hyr30minuter.style.display= 'none'; // gömmer knappen för hyrning i 30 minuter
+                Avsluta.style.display= 'none';
+
+            }
+            else{
+                Hyr1timme.disabled = false; // får knappen att fortsätta funka
+                Hyr30minuter.disabled = false; // får knappen att fortsätta funka
+                
+            }
+        });
+
         </script>
 </body>
 </html>
